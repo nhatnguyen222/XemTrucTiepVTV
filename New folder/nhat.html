@@ -1,0 +1,302 @@
+
+<!doctype html>
+<html>
+<head>
+     <script src="jquery-3.3.1.min.js"></script>
+   <script  src="hls.min.js"></script>
+   <link href="embed/video.css" rel="stylesheet" >
+   <script src="jquery-ui.js"></script> 
+</head>
+<body>
+  <div class="video_wrapper">
+
+ <div class="videos">  
+ <video id="video" class="video"  ></video>
+
+          <div class="button_play_big">  </div>
+                <div class="control_wrapper">
+                    <div class="main_control">
+                        <div class="btns">
+                            <div class="play"></div>
+                            <div class="pause"></div>
+                        </div>  
+
+                             <div class="sound_div">
+                        <div class="zv_btns">
+                            <div class="sound"></div>
+                            <div class="muted"></div>
+                        </div>
+                        <div class="sl_cont">
+                            <div id="slider"></div>
+                        </div></div>
+                        <div class="right">
+                        <div class="zoom"></div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+
+    <script>
+    var mVideo = document.getElementById("video");
+        var meter = 0;
+        var meter4 = 0;
+        setInterval("test2()", 500);
+function test2() {
+     if ( mVideo.readyState === 4 ){++meter4;}
+
+     if (mVideo.readyState !== 4  &&  mVideo.paused === false ){
+     ++meter;
+     console.log(mVideo.readyState); 
+     }
+}
+        var zvuk  =1;
+        var timer  =600;
+        var a_play  =0;
+   var hd_poz  = 0;
+   var l_poz  = 1;
+   
+    </script>
+ <script>
+   
+$(document).ready(function(){
+	$('.ws_abuse').width($('.ws_abuse + *').width());
+	$(window).on('scroll resize', function(){
+		$('.ws_abuse').width($('.ws_abuse + *').width());
+	});
+	
+	
+	$(document).on('click', '.ws_abuse_close, .ws_abuse_overflow', function(e){
+		e.preventDefault();
+		$('.ws_abuse_bg').remove();
+	});	
+
+	
+
+});
+
+		$(document).on("submit", ".ws_abuse_form", function(event) {
+		event.preventDefault();
+		var r=false;
+		var f=$(this);
+		if (r) return false;
+		f.find("button[type=submit]").attr( 'disabled', 'disabled' );
+		f.find("button[type=submit]").text( '...' );
+		$.ajax({
+			type	: "POST",
+			cache	: false,
+			url		: "/abuse.php",
+			data	: $(this).serializeArray(),
+			success : function(data) {
+				f.trigger('reset');
+				f.find("button[type=submit]").removeAttr( 'disabled' );
+				f.find("button[type=submit]").text( 'Submit' );
+				$('.ws_abuse_form').html('<div class="ws_abuse_success">Message sent successfully.</div>' );
+				setTimeout(function(){
+					$('.ws_abuse_bg').remove();
+				}, 2000);	
+			}
+		});
+		return false;
+	});	
+	
+                                                               }
+        if (mVideo.readyState === 4 || mVideo.readyState === 3) { $(".alert div").css("display", "none");}
+                     }
+                     </script> 
+     <script>
+       //Luong truc tiep
+        var n_url = "http://ott3a.hcmute.edu.vn:1935/livetest/smil:vtv3.smil/playlist.m3u8"; 
+  
+$(".btns, .button_play_big").click(function() {
+    $(".play").toggle();
+    $(".pause").toggle();
+    $(".button_play_big").toggle();
+});
+
+function aPlayF() {
+    $(".play").toggle();
+    $(".pause").toggle();
+    $(".button_play_big").toggle();
+}
+
+var zums_p = 0;
+$(".zoom").click(function() {
+    var el = document.documentElement;
+    if (zums_p === 0) {
+        rfs = el.requestFullScreen ||
+            el.webkitRequestFullScreen ||
+            el.mozRequestFullScreen;
+        rfs.call(el);
+        zums_p = 1;
+    } else
+
+    if (zums_p === 1) {
+        if (document.exitFullscreen)
+            document.exitFullscreen();
+        else if (document.msExitFullscreen)
+            document.msExitFullscreen();
+        else if (document.mozCancelFullScreen)
+            document.mozCancelFullScreen();
+        else if (document.webkitExitFullscreen)
+            document.webkitExitFullscreen();
+        zums_p = 0;
+
+    }
+});
+var z_pos = 0;
+if (a_play === 1) {
+var z_pos = 1;
+    $(".sound").toggle();
+    $(".muted").toggle();
+}
+$(".zv_btns").click(function() {
+    $(".sound").toggle();
+    $(".muted").toggle();
+    $("#slider").toggle();
+});
+$("#slider").slider({
+    range: "min",
+    min: 0,
+    max: 100,
+    value: 30,
+    animate: true,
+    slide: function(event, ui) {
+        mVideo.volume = ui.value / 100;
+    }
+});
+$(".sound_div").mousemove(function() {
+    if (z_pos === 0) {
+        $("#slider").css("visibility", "visible");
+    }
+});
+$(".sound_div").mouseout(function() {
+
+        $("#slider").css("visibility", "hidden");
+
+});
+ 
+
+var hd_btn = document.querySelector(".hd");
+var pauses = 1;
+var ur_t = n_url;
+
+
+$( ".video_wrapper" ).mouseover(function() {
+  $(".control_wrapper").css("display", "block");
+});
+$( ".video_wrapper" ).mouseout(function() {
+   $(".control_wrapper").css("display", "none");
+});
+setInterval("preload()", 500);
+function preload() {
+ if (mVideo.readyState === 0 || mVideo.readyState === 2 && mVideo.paused === false) {
+ $(".video").css("opacity","0.7");   
+ $(".preload").css("display", "block");
+ }
+
+  if (mVideo.readyState === 4 || mVideo.readyState === 3) {
+ $(".video").css("opacity","1");    
+ $(".preload").css("display", "none");
+ }
+         if (mVideo.paused == true) {
+   $(".video").css("opacity","0.7"); 
+    $(".preload").css("display", "none");
+        }
+}
+
+
+if (Hls.isSupported()) {
+ var config = {
+     liveDurationInfinity:true,
+};
+
+      var hls = new Hls(config);
+}
+
+
+function loadSource(url) {
+   hls.attachMedia(mVideo); 
+   hls.loadSource(url);
+   hls.startLoad();
+}
+$(".play, .button_play_big").click(function () {
+pLaY();
+});
+
+$(".pause").click(function () {
+    pAuSe();
+    pauses = 1;
+});
+
+setInterval("tImerPause()", 5000);
+
+function tImerPause() {
+    if (pauses === 0) {
+        if (mVideo.paused == true) {
+            pAuSe();
+        }
+    }
+}
+
+if (a_play === 1) {
+    setTimeout(function () {
+        pLaY();
+        aPlayF();
+    }, 1000);
+}
+
+function pLaY() {
+    loadSource(ur_t); 
+    console.log("PLAY");
+    mVideo.play();
+    pPlay();
+    pauses = 0;
+}  
+function pAuSe() {
+    hls.stopLoad();
+    mVideo.pause();
+    pauses = 1;
+}
+function pPlay() {
+    //   console.log(pauses);
+    setTimeout(function () {
+        if (pauses === 0) {
+            pAuSe();
+            aPlayF();
+            pauses = 1;
+        }
+    }, timer * 1000);
+}
+if (zvuk === 0) {
+    $(".sl_cont").css("display", "none");
+    $(".zv_btns").css("display", "none");
+}
+if (hd_poz === 0) {
+    $(".hd").css("display", "none");
+}
+if (l_poz === 0) {
+    $(".logo").css("display", "none");
+     $(".logo_en").css("display", "none");
+         $(".logo_rtsp").css("display", "none");
+}
+
+var z_pos = 0;
+if (a_play === 1) {
+var z_pos = 1;
+}
+
+$(".zv_btns").click(function () {
+    if (z_pos === 0) {
+        mVideo.muted = true;
+        $("#slider").css("visibility", "hidden");
+        z_pos = 1;
+    }
+    else {
+        mVideo.muted = false;
+        z_pos = 0;
+    }
+});
+             
+    </script></body>
+</html>
